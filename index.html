@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hey you....</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #f9fafb;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+}
+
+header {
+    background: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    padding: 1rem 2rem;
+}
+
+header h1 {
+    color: #dc2626;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+nav {
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    position: sticky;
+    top: 60px;
+    z-index: 20;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.tabs {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0 2rem;
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    border: none;
+    background: none;
+    color: #6b7280;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 4px solid transparent;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.tab:hover {
+    color: #111827;
+}
+
+.tab.active {
+    color: #111827;
+    border-bottom-color: #dc2626;
+}
+
+main {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.masonry {
+    column-count: 4;
+    column-gap: 20px;
+}
+
+@media (max-width: 1200px) { .masonry { column-count: 3; } }
+@media (max-width: 768px) { .masonry { column-count: 2; } }
+@media (max-width: 480px) { .masonry { column-count: 1; } }
+
+.card {
+    break-inside: avoid;
+    margin-bottom: 20px;
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    transform: scale(1.02);
+}
+
+.card img,
+.card video {
+    width: 100%;
+    height: auto;
+    display: block;
+    pointer-events: none;
+}
+
+.card-content {
+    padding: 1.25rem;
+}
+
+.card-title {
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: #111827;
+    margin-bottom: 0.5rem;
+}
+
+.card-description {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.letter-card {
+    max-width: 800px;
+    margin: 0 auto;
+    background: linear-gradient(to bottom right, #fce7f3, #f3e8ff);
+    padding: 3rem;
+    border-radius: 24px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.letter-card h2 {
+    font-size: 3rem;
+    color: #111827;
+    margin-bottom: 1.5rem;
+}
+
+.letter-card p {
+    font-size: 1.25rem;
+    color: #374151;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.heart-icon {
+    text-align: right;
+    margin-top: 1.5rem;
+    font-size: 2rem;
+    color: #ec4899;
+}
+
+.thankyou-card {
+    max-width: 800px;
+    margin: 0 auto;
+    background: linear-gradient(to bottom right, #e9d5ff, #fce7f3, #fef3c7);
+    padding: 4rem;
+    border-radius: 24px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.thankyou-card .star {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+}
+
+.thankyou-card h2 {
+    font-size: 3.5rem;
+    color: #111827;
+    margin-bottom: 1.5rem;
+}
+
+.thankyou-card p {
+    font-size: 1.25rem;
+    color: #374151;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.milestone-card {
+    display: flex;
+    align-items: start;
+    gap: 0.75rem;
+    padding: 1.5rem;
+}
+
+.milestone-icon {
+    color: #eab308;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.quote-card {
+    background: linear-gradient(to bottom right, #fef3c7, #fed7aa);
+    padding: 1.5rem;
+}
+
+.quote-text {
+    font-style: italic;
+    color: #111827;
+    margin-bottom: 1rem;
+    font-size: 1.125rem;
+}
+
+.quote-author {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.verse-card {
+    background: linear-gradient(to bottom right, #dcfce7, #a7f3d0);
+    padding: 1.5rem;
+}
+
+.verse-text {
+    color: #111827;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.verse-reference {
+    color: #6b7280;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.video-card {
+    position: relative;
+}
+
+.video-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.play-button {
+    width: 80px;
+    height: 80px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.play-icon {
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-left: 25px solid white;
+    border-bottom: 15px solid transparent;
+    margin-left: 5px;
+}
+
+.viewer {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.viewer.active {
+    display: flex;
+}
+
+.viewer-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 50px;
+    color: white;
+    cursor: pointer;
+    z-index: 10;
+    user-select: none;
+}
+
+.viewer-close:hover {
+    opacity: 0.7;
+}
+
+.viewer-content {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.viewer-content img,
+.viewer-content video {
+    max-width: 100%;
+    max-height: 90vh;
+    display: block;
+}
+
+.viewer-left,
+.viewer-right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 40%;
+    z-index: 5;
+    cursor: pointer;
+}
+
+.viewer-left { left: 0; }
+.viewer-right { right: 0; }
+
+.section-header {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.section-container {
+    margin-bottom: 3rem;
+}
+
+@media (max-width: 768px) {
+    header h1 { font-size: 1.25rem; }
+    .letter-card h2 { font-size: 2rem; }
+    .letter-card p { font-size: 1rem; }
+    .thankyou-card h2 { font-size: 2.5rem; }
+    .thankyou-card p { font-size: 1rem; }
+    .section-header { font-size: 1.5rem; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Hey you....</h1>
+</header>
+
+<nav>
+    <div class="tabs">
+        <button class="tab active" data-tab="tab1">
+            <span>❤️</span>
+            <span>My letter to you!</span>
+        </button>
+        <button class="tab" data-tab="tab2">
+            <span>✨</span>
+            <span>How Far You've Come</span>
+        </button>
+        <button class="tab" data-tab="tab3">
+            <span>📖</span>
+            <span>Quotes & Verses</span>
+        </button>
+        <button class="tab" data-tab="tab4">
+            <span>📷</span>
+            <span>Memories</span>
+        </button>
+        <button class="tab" data-tab="tab5">
+            <span>⭐</span>
+            <span>Thank You</span>
+        </button>
+    </div>
+</nav>
+
+<main>
+    <div class="tab-content active" id="tab1">
+        <div class="letter-card">
+            <h1>Dear Musa</h1>
+            <p>...or should I say Mufasa? 😂</p>
+        
+        <div class="content">
+            <p>The first time I met you, bro lied and said his name is Mufasa <span class="emoji">😭😂</span>. Wow. But it was at that moment I was like mmm this guy is kinda cool, I like his vibe.</p>
+            
+            <p>I'm gonna describe to you the type of person you are and you'll do the rest:</p>
+            
+            <div class="qualities">
+                <h3>The Musa I Know:</h3>
+                <ul>
+                    <li><span class="highlight">Cares too much</span> - sometimes I wonder if you realize how much you actually do for people.</li>
+                    <li><span class="highlight">Chef</span> - bro can actually throw down in the kitchen, those meals saved me ngl.</li>
+                    <li><span class="highlight">Looked for me and took care of me at my worst</span> - I'll never forget that, for real</li>
+                    <li><span class="highlight">Walks to Boulevard</span> - solving all the world's problems one step at a time as you made me not fear leaving my comfort zone</li>
+                    <li><span class="highlight">Exploring campus</span> - finding all the hidden spots and shortcuts</li>
+                    <li><span class="highlight">Study sessions</span> - those study sessions turned into meme factories😂</li>
+                </ul>
+            </div>
+            
+            <p>Looking back at everything, I realize how blessed I am to have a friend like you. You came into my life unexpectedly but became one of the realest people I know. From you pretending to be Mufasa to actually becoming the king of good vibes in my life it's been a journey 😂.</p>
+            
+            <p>You're the type of person who doesn't just ask if you're okay, you actually make sure of it. You don't just say you care, you show it in everything you do. And for that, I'm forever grateful.</p>
+            
+            <p>This isn't just a collection of memories, it's proof that real friendships still exist. You're a good friend and an even better person thanks for being someone I could always be myself around, even at my lowest.</p>
+            
+            <p>To many more long walks, campus explorations, and ALL video sessions 🫡. Can't wait to see where life takes you, Musa (not Mufasa 😂)❤️‼️</p>
+            
+            <div class="sign-off">
+                <p>Mel</p>
+            </div>
+    </div>
+
+    <div class="tab-content" id="tab2">
+        <h2 class="section-header">Your Journey This Year</h2>
+        <div class="masonry">
+            <div class="card">
+                <div class="milestone-card">
+                    <div class="milestone-icon">✨</div>
+                    <p>Started believing in yourself more</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="milestone-card">
+                    <div class="milestone-icon">✨</div>
+                    <p>Overcame challenges you thought were impossible</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="milestone-card">
+                    <div class="milestone-icon">✨</div>
+                    <p>Found strength in vulnerability</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="milestone-card">
+                    <div class="milestone-icon">✨</div>
+                    <p>Built deeper connections</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="milestone-card">
+                    <div class="milestone-icon">✨</div>
+                    <p>Discovered new passions</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="milestone-card">
+                    <div class="milestone-icon">✨</div>
+                    <p>Learned to set boundaries</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="tab3">
+        <div class="section-container">
+            <h2 class="section-header">Videos That Speak to You</h2>
+            <div class="masonry">
+                <div class="card video-card" data-type="video" data-src="Be the girl who got away !!!.mp4">
+                    <div style="aspect-ratio: 3/4; background: linear-gradient(to bottom right, #60a5fa, #a78bfa); position: relative;">
+                        <video src="Be the girl who got away !!!.mp4" muted preload="metadata" style="width: 100%; height: 100%; object-fit: cover;"></video>
+                        <div class="video-overlay">
+                            <div class="play-button">
+                                <div class="play-icon"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-title" style="text-align: center;">Growth Mindset</p>
+                    </div>
+                </div>
+                <div class="card video-card" data-type="video" data-src="https://www.w3schools.com/html/movie.mp4">
+                    <div style="aspect-ratio: 4/5; background: linear-gradient(to bottom right, #f472b6, #fb923c); position: relative;">
+                        <video src="https://www.w3schools.com/html/movie.mp4" muted preload="metadata" style="width: 100%; height: 100%; object-fit: cover;"></video>
+                        <div class="video-overlay">
+                            <div class="play-button">
+                                <div class="play-icon"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-title" style="text-align: center;">Resilience</p>
+                    </div>
+                </div>
+                <div class="card video-card" data-type="video" data-src="https://www.w3schools.com/html/mov_bbb.mp4">
+                    <div style="aspect-ratio: 1/1; background: linear-gradient(to bottom right, #4ade80, #2dd4bf); position: relative;">
+                        <video src="https://www.w3schools.com/html/mov_bbb.mp4" muted preload="metadata" style="width: 100%; height: 100%; object-fit: cover;"></video>
+                        <div class="video-overlay">
+                            <div class="play-button">
+                                <div class="play-icon"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-title" style="text-align: center;">Self-Love</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <h2 class="section-header">Quotes That Resonate</h2>
+            <div class="masonry">
+                <div class="card quote-card">
+                    <p class="quote-text">"Growth is uncomfortable because you have never been here before."</p>
+                    <p class="quote-author">— Unknown</p>
+                </div>
+                <div class="card quote-card">
+                    <p class="quote-text">"The only way out is through."</p>
+                    <p class="quote-author">— Robert Frost</p>
+                </div>
+                <div class="card quote-card">
+                    <p class="quote-text">"You are exactly where you need to be."</p>
+                    <p class="quote-author">— Unknown</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <h2 class="section-header">Verses for Your Journey</h2>
+            <div class="masonry">
+                <div class="card verse-card">
+                    <p class="verse-text">For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future.</p>
+                    <p class="verse-reference">— Jeremiah 29:11</p>
+                </div>
+                <div class="card verse-card">
+                    <p class="verse-text">Cast all your anxiety on him because he cares for you.</p>
+                    <p class="verse-reference">— 1 Peter 5:7</p>
+                </div>
+                <div class="card verse-card">
+                    <p class="verse-text">Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.</p>
+                    <p class="verse-reference">— Joshua 1:9</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="tab4">
+        <h2 class="section-header">Our Favorite Moments</h2>
+        <div class="masonry">
+            <div class="card" data-type="image" data-src="https://picsum.photos/1200/1700">
+                <img src="https://picsum.photos/400/600" alt="Late night conversations">
+                <div class="card-content">
+                    <p class="card-title">Late night conversations</p>
+                    <p class="card-description">Those 2am talks that felt like therapy</p>
+                </div>
+            </div>
+            <div class="card" data-type="video" data-src="https://www.w3schools.com/html/mov_bbb.mp4">
+                <video src="https://www.w3schools.com/html/mov_bbb.mp4" muted preload="metadata"></video>
+                <div class="card-content">
+                    <p class="card-title">Inside jokes</p>
+                    <p class="card-description">The ones only we understand</p>
+                </div>
+            </div>
+            <div class="card" data-type="image" data-src="https://picsum.photos/1100/1300">
+                <img src="https://picsum.photos/400/500" alt="Random adventures">
+                <div class="card-content">
+                    <p class="card-title">Random adventures</p>
+                    <p class="card-description">Spontaneous moments that became core memories</p>
+                </div>
+            </div>
+            <div class="card" data-type="image" data-src="https://picsum.photos/1400/1600">
+                <img src="https://picsum.photos/400/650" alt="Support through tough times">
+                <div class="card-content">
+                    <p class="card-title">Support through tough times</p>
+                    <p class="card-description">Being there when it mattered most</p>
+                </div>
+            </div>
+            <div class="card" data-type="video" data-src="https://www.w3schools.com/html/movie.mp4">
+                <video src="https://www.w3schools.com/html/movie.mp4" muted preload="metadata"></video>
+                <div class="card-content">
+                    <p class="card-title">Celebrating wins together</p>
+                    <p class="card-description">Your success feels like my success</p>
+                </div>
+            </div>
+            <div class="card" data-type="image" data-src="https://picsum.photos/1200/1200">
+                <img src="https://picsum.photos/400/450" alt="Comfortable silence">
+                <div class="card-content">
+                    <p class="card-title">Comfortable silence</p>
+                    <p class="card-description">When words aren't needed</p>
+                </div>
+            </div>
+            <div class="card" data-type="image" data-src="https://picsum.photos/1300/1800">
+                <img src="https://picsum.photos/400/700" alt="Sunday brunch vibes">
+                <div class="card-content">
+                    <p class="card-title">Sunday brunch vibes</p>
+                    <p class="card-description">Good food, better company</p>
+                </div>
+            </div>
+            <div class="card" data-type="video" data-src="https://www.w3schools.com/html/mov_bbb.mp4">
+                <video src="https://www.w3schools.com/html/mov_bbb.mp4" muted preload="metadata"></video>
+                <div class="card-content">
+                    <p class="card-title">Dance party memories</p>
+                    <p class="card-description">No rhythm, all vibes</p>
+                </div>
+            </div>
+            <div class="card" data-type="image" data-src="https://picsum.photos/1250/1450">
+                <img src="https://picsum.photos/400/550" alt="Golden hour moments">
+                <div class="card-content">
+                    <p class="card-title">Golden hour moments</p>
+                    <p class="card-description">That perfect lighting</p>
+                </div>
+            </div>
+            <div class="card" data-type="image" data-src="https://picsum.photos/1150/1350">
+                <img src="https://picsum.photos/400/480" alt="Road trip adventures">
+                <div class="card-content">
+                    <p class="card-title">Road trip adventures</p>
+                    <p class="card-description">Miles of memories</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="tab5">
+        <div class="thankyou-card">
+            <div class="star">⭐</div>
+            <h2>Thank You</h2>
+            <p style="font-size: 1.5rem; margin-bottom: 1.5rem;">For being my friend this year</p>
+            <p>For every laugh, every tear, every moment of silence, and every burst of joy. For showing up when it mattered and for being unapologetically you.</p>
+            <p>You make this world brighter just by being in it.</p>
+            <p style="font-size: 1.5rem; margin-top: 1.5rem;">Here's to many more adventures together 💛</p>
+        </div>
+    </div>
+</main>
+
+<div class="viewer" id="viewer">
+    <span class="viewer-close" id="viewerClose">&times;</span>
+    <div class="viewer-left" id="viewerLeft"></div>
+    <div class="viewer-right" id="viewerRight"></div>
+    <div class="viewer-content" id="viewerContent"></div>
+</div>
+
+<script>
+var tabs = document.querySelectorAll('.tab');
+var tabContents = document.querySelectorAll('.tab-content');
+
+tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+        var targetTab = tab.dataset.tab;
+        
+        tabs.forEach(function(t) {
+            t.classList.remove('active');
+        });
+        tabContents.forEach(function(tc) {
+            tc.classList.remove('active');
+        });
+        
+        tab.classList.add('active');
+        document.getElementById(targetTab).classList.add('active');
+    });
+});
+
+document.querySelectorAll('.card video').forEach(function(video) {
+    var playTimeout;
+    
+    video.parentElement.addEventListener('mouseenter', function() {
+        clearTimeout(playTimeout);
+        playTimeout = setTimeout(function() {
+            video.play();
+        }, 50);
+    });
+    
+    video.parentElement.addEventListener('mouseleave', function() {
+        clearTimeout(playTimeout);
+        video.pause();
+        video.currentTime = 0;
+    });
+});
+
+var cards = Array.from(document.querySelectorAll('.card[data-type]'));
+var viewerIndex = 0;
+
+var viewer = document.getElementById('viewer');
+var viewerContent = document.getElementById('viewerContent');
+
+function openViewer(index) {
+    viewerIndex = index;
+    var card = cards[index];
+    var type = card.dataset.type;
+    var src = card.dataset.src;
+    
+    viewer.classList.add('active');
+    
+    if (type === 'image') {
+        viewerContent.innerHTML = '<img src="' + src + '">';
+    } else {
+        viewerContent.innerHTML = '<video src="' + src + '" controls autoplay></video>';
+    }
+}
+
+cards.forEach(function(card, i) {
+    card.addEventListener('click', function() {
+        openViewer(i);
+    });
+});
+
+document.getElementById('viewerClose').onclick = function() {
+    viewer.classList.remove('active');
+    viewerContent.innerHTML = '';
+};
+
+viewer.onclick = function(e) {
+    if (e.target === viewer) {
+        viewer.classList.remove('active');
+        viewerContent.innerHTML = '';
+    }
+};
+
+function next() {
+    viewerIndex = (viewerIndex + 1) % cards.length;
+    openViewer(viewerIndex);
+}
+
+function prev() {
+    viewerIndex = (viewerIndex - 1 + cards.length) % cards.length;
+    openViewer(viewerIndex);
+}
+
+document.getElementById('viewerLeft').onclick = function(e) {
+    e.stopPropagation();
+    prev();
+};
+
+document.getElementById('viewerRight').onclick = function(e) {
+    e.stopPropagation();
+    next();
+};
+
+var startX = 0;
+
+viewer.addEventListener('touchstart', function(e) {
+    startX = e.touches[0].clientX;
+});
+
+viewer.addEventListener('touchend', function(e) {
+    var endX = e.changedTouches[0].clientX;
+    if (endX - startX > 50) prev();
+    if (startX - endX > 50) next();
+});
+</script>
+
+</body>
+</html>
